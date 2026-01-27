@@ -1,0 +1,7 @@
+modelo\Pelicula.class
+Controlador\MongoConnector.class
+com\mycompany\proyect_2evaluacion\Proyect_2Evaluacion.class
+dao\PeliculaRepository.class
+Controlador\APIConnector.class
+dao\PersonajeRepository.class
+modelo\Personaje.class
