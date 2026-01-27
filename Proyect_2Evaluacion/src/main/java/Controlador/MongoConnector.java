@@ -6,18 +6,28 @@ package Controlador;
 
 import Modelo.Pelicula;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
 import dao.PeliculaRepository;
 import dao.PersonajeRepository;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Personaje;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -90,4 +100,5 @@ public class MongoConnector {
 				public ArrayList<Pelicula> cogerPeliculas (MongoDatabase db) {
 								return pelr.cogerPeliculasMongo(db);
 				}
+				
 }

@@ -84,6 +84,31 @@ public class DBConnector {
             Logger.getLogger(DBConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+				
+				public void insertarRelacionATravesDePeliculas (ArrayList<Pelicula> peliculas) {
+								String insert = "INSERT INTO personaje_pelicula(personaje_id, pelicula_id) "
+																												+ "VALUES (?, ?);";
+
+        try {
+            PreparedStatement pstmt = con.prepareStatement(insert);
+
+            for (int i = 0; i < peliculas.size(); i++) {
+																Pelicula pel = peliculas.get(i);
+																
+																for (int j = 0; j < peliculas.get(i).getPersonajes().size(); j++) {
+																				Personaje per = peliculas.get(i).getPersonajes().get(j);
+																				
+																				pstmt.setInt(1, per.getId());
+																				pstmt.setInt(2, pel.getEpisode_id());
+																				pstmt.execute();
+																}
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+				}
+				
 
     private void createBaseDatos (String nameDB) {
         try {
