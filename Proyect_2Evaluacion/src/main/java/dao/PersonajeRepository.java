@@ -30,15 +30,15 @@ public class PersonajeRepository {
         db.getCollection(nomColeccion, Personaje.class).insertMany(personajes);
     }
 				
-				public ArrayList<Personaje> cogerPersonajesMongo (MongoDatabase db) {
-								FindIterable<Personaje> persMongo = db.getCollection(nomColeccion, Personaje.class).find();
-								ArrayList<Personaje> personajes = new ArrayList<>();
-								
-								for (Personaje p : persMongo) {
-												personajes.add(p);
-								}
-								
-								
-								return personajes;
-				}
+    public ArrayList<Personaje> cogerPersonajesMongo (MongoDatabase db) {
+        FindIterable<Personaje> persMongo = db.getCollection(nomColeccion, Personaje.class).find();
+        ArrayList<Personaje> personajes = new ArrayList<>();
+
+        for (Personaje p : persMongo) {
+                                        personajes.add(p);
+        }
+
+
+        return personajes;
+    }
 }

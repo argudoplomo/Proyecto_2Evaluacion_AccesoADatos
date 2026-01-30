@@ -178,14 +178,14 @@ public class APIConnector {
     private double transformarPeso (String strPeso) {
         strPeso = strPeso.replace(',', '.');
         if (strPeso.equals("unknown")) {
-            return 0;
+            return -1;
         }
         return Double.parseDouble(strPeso);
     }
     
     private int transformarAltura (String strAltura) {
         if (strAltura.equals("unknown")) {
-            return 0;
+            return -1;
         }
         return Integer.parseInt(strAltura);
     }

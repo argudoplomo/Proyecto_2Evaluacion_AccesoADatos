@@ -44,12 +44,12 @@ public class Proyect_2Evaluacion {
             //mongo.insertarPersonajes(db, pers);
             //mongo.insertarPeliculas(db, pels);
 												
-												ArrayList <Personaje> pers2 = mongo.cogerPersonajes(db);
-												ArrayList <Pelicula> pels2 = mongo.cogerPeliculas(db);
-												
-												sql.insertarPersonajes(pers2);
-												sql.insertarPeliculas(pels2);
-												sql.insertarRelacionATravesDePeliculas(pels2);
+            ArrayList <Personaje> pers2 = mongo.cogerPersonajes(db);
+            ArrayList <Pelicula> pels2 = mongo.cogerPeliculas(db);
+
+            sql.insertarPersonajes(pers2);
+            sql.insertarPeliculas(pels2);
+            sql.insertarRelacionATravesDePeliculas(pels2);
 												
 												
             

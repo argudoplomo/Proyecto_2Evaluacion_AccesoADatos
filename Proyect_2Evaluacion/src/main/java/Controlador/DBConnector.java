@@ -24,7 +24,7 @@ import modelo.Personaje;
 public class DBConnector {
     private String strConection = "jdbc:mysql://localhost/";
     private String user = "root";
-    private String password = "";
+    private String password = "argudo";
 
     Connection con;
 
@@ -39,7 +39,7 @@ public class DBConnector {
 
     public void insertarPersonajes (ArrayList <Personaje> personajes) {
         String insert = "INSERT INTO personaje (id, nombre, genero, lugar_nacimiento, anio_nacimiento, altura, peso) "
-                                                                        + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            + "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try {
             PreparedStatement pstmt = con.prepareStatement(insert);
@@ -64,7 +64,7 @@ public class DBConnector {
 
     public void insertarPeliculas (ArrayList <Pelicula> peliculas) {
         String insert = "INSERT INTO pelicula(episode_id, titulo, director, productor, fecha_lanzamiento) "
-                                                                        + "VALUES (?, ?, ?, ?, ?);";
+        + "VALUES (?, ?, ?, ?, ?);";
 
         try {
             PreparedStatement pstmt = con.prepareStatement(insert);
@@ -85,23 +85,23 @@ public class DBConnector {
         }
     }
 				
-				public void insertarRelacionATravesDePeliculas (ArrayList<Pelicula> peliculas) {
-								String insert = "INSERT INTO personaje_pelicula(personaje_id, pelicula_id) "
+    public void insertarRelacionATravesDePeliculas (ArrayList<Pelicula> peliculas) {
+                                    String insert = "INSERT INTO personaje_pelicula(personaje_id, pelicula_id) "
 																												+ "VALUES (?, ?);";
 
         try {
             PreparedStatement pstmt = con.prepareStatement(insert);
 
             for (int i = 0; i < peliculas.size(); i++) {
-																Pelicula pel = peliculas.get(i);
-																
-																for (int j = 0; j < peliculas.get(i).getPersonajes().size(); j++) {
-																				Personaje per = peliculas.get(i).getPersonajes().get(j);
-																				
-																				pstmt.setInt(1, per.getId());
-																				pstmt.setInt(2, pel.getEpisode_id());
-																				pstmt.execute();
-																}
+                Pelicula pel = peliculas.get(i);
+
+                for (int j = 0; j < peliculas.get(i).getPersonajes().size(); j++) {
+                    Personaje per = peliculas.get(i).getPersonajes().get(j);
+
+                    pstmt.setInt(1, per.getId());
+                    pstmt.setInt(2, pel.getEpisode_id());
+                    pstmt.execute();
+                }
             }
 
         } catch (SQLException ex) {
@@ -130,13 +130,13 @@ public class DBConnector {
 
     private void crearTablas () {
         String tablaPersonaje = "CREATE TABLE IF NOT EXISTS personaje (\n" +
-                                        "id INT AUTO_INCREMENT PRIMARY KEY,\n" +
-                                        "nombre VARCHAR(100) NOT NULL,\n" +
-                                        "genero VARCHAR(50),\n" +
-                                        "lugar_nacimiento VARCHAR(100),\n" +
-                                        "anio_nacimiento VARCHAR(10),\n" +
-                                        "altura INT,\n" +
-                                        "peso DOUBLE\n" +
+            "id INT AUTO_INCREMENT PRIMARY KEY,\n" +
+            "nombre VARCHAR(100) NOT NULL,\n" +
+            "genero VARCHAR(50),\n" +
+            "lugar_nacimiento VARCHAR(100),\n" +
+            "anio_nacimiento VARCHAR(10),\n" +
+            "altura INT,\n" +
+            "peso DOUBLE\n" +
         ");";
         String tablaPelicula = "CREATE TABLE IF NOT EXISTS pelicula (\n" +
             "episode_id INT PRIMARY KEY,\n" +

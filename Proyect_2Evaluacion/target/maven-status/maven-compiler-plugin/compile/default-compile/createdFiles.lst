@@ -5,3 +5,4 @@ dao\PeliculaRepository.class
 Controlador\APIConnector.class
 dao\PersonajeRepository.class
 modelo\Personaje.class
+Controlador\DBConnector.class
