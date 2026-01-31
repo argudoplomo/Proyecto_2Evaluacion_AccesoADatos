@@ -5,30 +5,53 @@
 package modelo;
 
 import Modelo.Pelicula;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Diurno
  */
+@Entity
+@Table(name = "personaje")
 public class Personaje {
-				
+	
+    @Id
+    @Column(name = "id")
     private int id;
+    
+    @Column(name = "nombre")
     private String nombre;
+    
+    @Column(name = "genero")
     private String genero;
+    
+    @Column(name = "lugar_nacimiento")
     private String lugarNacimiento;
+    
+    @Column(name = "anio_nacimiento")
     private String anioNacimiento;
+    
+    @Column(name = "altura")
     private int altura;
+    
+    @Column(name = "peso")
     private double peso;
-				
-				private ArrayList<Pelicula> apariciones;
+			
+    @ManyToMany(mappedBy = "personajes")
+    private List<Pelicula> apariciones;
 
 
     public Personaje () {}
 				
-				public Personaje (int id) {
-								this.id = id;
-				}
+    public Personaje (int id) {
+        this.id = id;
+    }
 
     public Personaje(int id, String nombre, String genero, String lugarNacimiento, String anioNacimiento, int altura, double peso, ArrayList<Pelicula> apariciones) {
         this.id = id;
@@ -38,7 +61,17 @@ public class Personaje {
         this.anioNacimiento = anioNacimiento;
         this.altura = altura;
         this.peso = peso;
-								this.apariciones = apariciones;
+        this.apariciones = apariciones;
+    }
+
+    public Personaje(int id, String nombre, String genero, String lugarNacimiento, String anioNacimiento, int altura, double peso) {
+        this.id = id;
+        this.nombre = nombre;
+        this.genero = genero;
+        this.lugarNacimiento = lugarNacimiento;
+        this.anioNacimiento = anioNacimiento;
+        this.altura = altura;
+        this.peso = peso;
     }
 
     public int getId() {
@@ -97,13 +130,13 @@ public class Personaje {
         this.peso = peso;
     }
 
-				public ArrayList<Pelicula> getApariciones() {
-								return apariciones;
-				}
+    public List<Pelicula> getApariciones() {
+        return apariciones;
+    }
 
-				public void setApariciones(ArrayList<Pelicula> apariciones) {
-								this.apariciones = apariciones;
-				}
+    public void setApariciones(ArrayList<Pelicula> apariciones) {
+        this.apariciones = apariciones;
+    }
 
     @Override
     public String toString() {

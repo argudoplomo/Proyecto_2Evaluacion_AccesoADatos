@@ -7,6 +7,7 @@ package dao;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import modelo.Personaje;
 
@@ -15,11 +16,15 @@ import modelo.Personaje;
  * @author Diurno
  */
 public class PersonajeRepository {
-    MongoClient instance;
+    
+    private EntityManager em;
+    
     private String nomColeccion = "personajes";
 
-    public PersonajeRepository (MongoClient instance) {
-        this.instance = instance;
+    public PersonajeRepository() {}
+    
+    public PersonajeRepository (EntityManager instance) {
+        this.em = instance;
     }
 
     public void crearColeccion (MongoDatabase db) {
@@ -35,10 +40,16 @@ public class PersonajeRepository {
         ArrayList<Personaje> personajes = new ArrayList<>();
 
         for (Personaje p : persMongo) {
-                                        personajes.add(p);
+            personajes.add(p);
         }
 
 
         return personajes;
+    }
+    
+    public void insertarHib (Personaje p) {
+        em.getTransaction().begin();
+        em.persist(p);
+        em.getTransaction().commit();
     }
 }

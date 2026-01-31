@@ -86,7 +86,7 @@ public class DBConnector {
     }
 				
     public void insertarRelacionATravesDePeliculas (ArrayList<Pelicula> peliculas) {
-                                    String insert = "INSERT INTO personaje_pelicula(personaje_id, pelicula_id) "
+        String insert = "INSERT INTO pelicula_personaje(personaje_id, pelicula_id) "
 																												+ "VALUES (?, ?);";
 
         try {
@@ -146,7 +146,7 @@ public class DBConnector {
             "fecha_lanzamiento DATE\n" +
         ");";
 
-        String tablaPersoPeli = "CREATE TABLE IF NOT EXISTS personaje_pelicula (\n" +
+        String tablaPersoPeli = "CREATE TABLE IF NOT EXISTS pelicula_personaje (\n" +
         "    personaje_id INT,\n" +
         "    pelicula_id INT,\n" +
         "    PRIMARY KEY (personaje_id, pelicula_id)," +

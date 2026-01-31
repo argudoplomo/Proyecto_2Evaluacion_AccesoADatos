@@ -45,13 +45,11 @@ public class MongoConnector {
     //CodecRegistry
     CodecRegistry codec = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(pojo));
 				
-    public MongoConnector(String dbUri) throws InstantiationException {
+    public MongoConnector(String dbUri) {
         if (instance == null) {
             instance = MongoClients.create(dbUri);
-            pr = new PersonajeRepository(getInstance());
-            pelr = new PeliculaRepository(getInstance());
-        } else {
-            throw new InstantiationException("Connector Instance Already Exists");
+            pr = new PersonajeRepository();
+            pelr = new PeliculaRepository();
         }
     }
 
@@ -93,12 +91,12 @@ public class MongoConnector {
         pelr.insertarMuchosMongo(db, peliculas);
     }
 				
-				public ArrayList<Personaje> cogerPersonajes (MongoDatabase db) {
-								return pr.cogerPersonajesMongo(db);
-				}
+    public ArrayList<Personaje> cogerPersonajes (MongoDatabase db) {
+	return pr.cogerPersonajesMongo(db);
+    }
 				
-				public ArrayList<Pelicula> cogerPeliculas (MongoDatabase db) {
-								return pelr.cogerPeliculasMongo(db);
-				}
+    public ArrayList<Pelicula> cogerPeliculas (MongoDatabase db) {
+	return pelr.cogerPeliculasMongo(db);
+    }
 				
 }

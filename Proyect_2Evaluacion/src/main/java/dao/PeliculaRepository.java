@@ -8,6 +8,8 @@ import Modelo.Pelicula;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import jakarta.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import modelo.Personaje;
 
@@ -16,11 +18,13 @@ import modelo.Personaje;
  * @author Argudo_Plomo
  */
 public class PeliculaRepository {
-    MongoClient instance;
+    EntityManager em;
     private String nomColeccion = "peliculas";
 
-    public PeliculaRepository (MongoClient instance) {
-        this.instance = instance;
+    public PeliculaRepository() {}
+    
+    public PeliculaRepository (EntityManager instance) {
+        this.em = instance;
     }
 
     public void crearColeccion (MongoDatabase db) {
@@ -40,5 +44,25 @@ public class PeliculaRepository {
         }
 
         return peliculas;
+    }
+    
+    public void insertarHib (Pelicula p) {
+        em.getTransaction().begin();
+        em.persist(p);
+        em.getTransaction().commit();
+    }
+    
+    public void insertarSecuelasHib () {
+        em.getTransaction().begin();
+        
+        Pelicula episode7 = new Pelicula(7, "The Force Awakens", "J. J. Abrams", "Kathleen Kennedy", LocalDate.of(2015, 12, 18));
+        Pelicula episode8 = new Pelicula(8, "The Last Jedi", "Rian Johnson", "Kathleen Kennedy", LocalDate.of(2017, 12, 15));
+        Pelicula episode9 = new Pelicula(9, "The Rise of Skywalker", "J. J. Abrams", "Kathleen Kennedy", LocalDate.of(2019, 12, 20));
+        
+        em.persist(episode7);
+        em.persist(episode8);
+        em.persist(episode9);
+        
+        em.getTransaction().commit();
     }
 }

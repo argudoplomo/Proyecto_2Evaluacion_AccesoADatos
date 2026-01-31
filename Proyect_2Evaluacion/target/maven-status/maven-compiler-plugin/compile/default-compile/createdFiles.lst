@@ -1,7 +1,10 @@
 modelo\Pelicula.class
 Controlador\MongoConnector.class
+Vista\Vista$1.class
 com\mycompany\proyect_2evaluacion\Proyect_2Evaluacion.class
 dao\PeliculaRepository.class
+Vista\Vista.class
+Controlador\HibernateConnector.class
 Controlador\APIConnector.class
 dao\PersonajeRepository.class
 modelo\Personaje.class
