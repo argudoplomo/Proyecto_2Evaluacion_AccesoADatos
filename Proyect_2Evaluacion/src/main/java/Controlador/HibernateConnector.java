@@ -41,4 +41,8 @@ public class HibernateConnector {
     public void insertarSecuelas () {
         pelr.insertarSecuelasHib();
     }
+    
+    public Pelicula buscarPeliPorIDHib (int id) {
+        return pelr.buscarPorIDHib(id);
+    }
 }

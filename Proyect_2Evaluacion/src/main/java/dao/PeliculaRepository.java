@@ -65,4 +65,10 @@ public class PeliculaRepository {
         
         em.getTransaction().commit();
     }
+    
+    public Pelicula buscarPorIDHib(int id) {
+        Pelicula p = em.find(Pelicula.class, id);
+        
+        return p;
+    }
 }

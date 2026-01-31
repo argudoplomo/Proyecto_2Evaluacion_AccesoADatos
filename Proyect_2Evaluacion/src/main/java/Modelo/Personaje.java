@@ -7,7 +7,12 @@ package modelo;
 import Modelo.Pelicula;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
@@ -22,6 +27,7 @@ import java.util.List;
 public class Personaje {
 	
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     
@@ -43,7 +49,12 @@ public class Personaje {
     @Column(name = "peso")
     private double peso;
 			
-    @ManyToMany(mappedBy = "personajes")
+    @ManyToMany
+    @JoinTable(
+        name = "pelicula_personaje",
+        joinColumns = @JoinColumn(name = "personaje_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "episode_id")
+    )
     private List<Pelicula> apariciones;
 
 
@@ -72,6 +83,16 @@ public class Personaje {
         this.anioNacimiento = anioNacimiento;
         this.altura = altura;
         this.peso = peso;
+    }
+
+    public Personaje(String nombre, String genero, String lugarNacimiento, String anioNacimiento, int altura, double peso, List<Pelicula> apariciones) {
+        this.nombre = nombre;
+        this.genero = genero;
+        this.lugarNacimiento = lugarNacimiento;
+        this.anioNacimiento = anioNacimiento;
+        this.altura = altura;
+        this.peso = peso;
+        this.apariciones = apariciones;
     }
 
     public int getId() {

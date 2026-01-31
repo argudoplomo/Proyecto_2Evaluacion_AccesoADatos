@@ -7,9 +7,9 @@ package Modelo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
@@ -27,6 +27,7 @@ import modelo.Personaje;
 public class Pelicula {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "episode_id")
     private int episode_id;
     
@@ -43,12 +44,7 @@ public class Pelicula {
     @Column(name = "fecha_lanzamiento")
     private LocalDate fecha_lanzamiento;
     
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "pelicula_personaje",
-        joinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "episode_id"),
-        inverseJoinColumns = @JoinColumn(name = "personaje_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "apariciones")
     private List<Personaje> personajes;
 
     public Pelicula () {}
