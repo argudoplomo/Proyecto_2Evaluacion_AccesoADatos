@@ -9,6 +9,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Personaje;
 
 /**
@@ -51,5 +52,17 @@ public class PersonajeRepository {
         em.getTransaction().begin();
         em.persist(p);
         em.getTransaction().commit();
+    }
+    
+    public String[] sacarTodosDeUnaPelicula (int episode_id) {
+        List<Personaje> pers = em.createQuery("select per from Pelicula pel join pel.personajes per where pel.episode_id = :id", Personaje.class)
+                .setParameter("id", episode_id).getResultList();
+        String[] nombres = new String[pers.size()];
+        
+        for (int i = 0; i < nombres.length; i++) {
+            nombres[i] = pers.get(i).getNombre();
+        }
+        
+        return nombres;
     }
 }

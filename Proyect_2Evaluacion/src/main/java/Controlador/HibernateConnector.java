@@ -49,4 +49,8 @@ public class HibernateConnector {
     public String[] sabarTitulosDePeliculas() {
         return pelr.sacarTitulos();
     }
+    
+    public String[] sacarNombresDePersonajesDePelicula (int episode_id) {
+        return perr.sacarTodosDeUnaPelicula(episode_id);
+    }
 }
