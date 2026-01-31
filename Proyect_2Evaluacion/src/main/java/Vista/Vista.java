@@ -11,6 +11,8 @@ import Controlador.MongoConnector;
 import Modelo.Pelicula;
 import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import modelo.Personaje;
 
 /**
@@ -31,8 +33,16 @@ public class Vista extends javax.swing.JFrame {
      */
     public Vista() {
         initComponents();
+        iniciarCheckBoxPeliculas();
     }
 
+    private void iniciarCheckBoxPeliculas () {
+        cbxPeliculas.removeAll();
+        String[] peliculas;
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(hibernate.sabarTitulosDePeliculas());
+        cbxPeliculas.setModel(modelo);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +88,7 @@ public class Vista extends javax.swing.JFrame {
         lblAltura = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        cbxPeliculas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("STAR WARS APP");
@@ -166,6 +177,8 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        cbxPeliculas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -242,8 +255,11 @@ public class Vista extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblNombreBD)
-                                    .addComponent(txtNameBDMongo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(409, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtNameBDMongo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(168, 168, 168)
+                                        .addComponent(cbxPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +271,8 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAPIMongo)
                     .addComponent(btnMongo)
-                    .addComponent(txtNameBDMongo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNameBDMongo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMongoHeidi)
@@ -413,6 +430,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton btnHeidi;
     private javax.swing.JButton btnMongo;
     private javax.swing.JButton btnSecuelas;
+    private javax.swing.JComboBox<String> cbxPeliculas;
     private javax.swing.JCheckBox chboxEpisode1;
     private javax.swing.JCheckBox chboxEpisode2;
     private javax.swing.JCheckBox chboxEpisode3;

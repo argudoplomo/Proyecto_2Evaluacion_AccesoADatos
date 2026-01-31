@@ -11,6 +11,7 @@ import com.mongodb.client.MongoDatabase;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Personaje;
 
 /**
@@ -70,5 +71,15 @@ public class PeliculaRepository {
         Pelicula p = em.find(Pelicula.class, id);
         
         return p;
+    }
+    
+    public String[] sacarTitulos () {
+        List<Pelicula> pelis = em.createQuery("select p from Pelicula p order by p.episode_id", Pelicula.class).getResultList();
+        String[] titulos = new String[pelis.size()];
+        
+        for (int i = 0; i < pelis.size(); i++) {
+            titulos[i] = pelis.get(i).getTitulo();
+        }
+        return titulos;
     }
 }

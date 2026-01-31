@@ -45,4 +45,8 @@ public class HibernateConnector {
     public Pelicula buscarPeliPorIDHib (int id) {
         return pelr.buscarPorIDHib(id);
     }
+    
+    public String[] sabarTitulosDePeliculas() {
+        return pelr.sacarTitulos();
+    }
 }
