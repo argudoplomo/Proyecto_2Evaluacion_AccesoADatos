@@ -191,6 +191,11 @@ public class Vista extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstPersonajes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstPersonajesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstPersonajes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -437,6 +442,18 @@ public class Vista extends javax.swing.JFrame {
         
         lstPersonajes.setModel(modelo);
     }//GEN-LAST:event_cbxPeliculasItemStateChanged
+
+    private void lstPersonajesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPersonajesValueChanged
+        String nombre = lstPersonajes.getSelectedValue();
+								Personaje p = hibernate.buscarPersonajePorNombre(nombre);
+								
+								txtNombre.setText(p.getNombre());
+								txtGenero.setText(p.getGenero());
+								txtLugarNacimiento.setText(p.getLugarNacimiento());
+								txtFechaNacimiento.setText(p.getAnioNacimiento());
+								txtAltura.setText(String.valueOf(p.getAltura()));
+								txtPeso.setText(String.valueOf(p.getPeso()));
+    }//GEN-LAST:event_lstPersonajesValueChanged
 
     /**
      * @param args the command line arguments

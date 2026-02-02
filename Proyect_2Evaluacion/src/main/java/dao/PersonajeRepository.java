@@ -50,7 +50,7 @@ public class PersonajeRepository {
     
     public void insertarHib (Personaje p) {
         em.getTransaction().begin();
-        em.persist(p);
+        em.merge(p);
         em.getTransaction().commit();
     }
     
@@ -65,4 +65,9 @@ public class PersonajeRepository {
         
         return nombres;
     }
+				
+				public Personaje buscarPorNombreHib (String nomPersonaje) {
+								Personaje p = em.createQuery("select p from Personaje p where p.nombre = :name", Personaje.class).setParameter("name", nomPersonaje).getSingleResult();
+								return p;
+				}
 }
