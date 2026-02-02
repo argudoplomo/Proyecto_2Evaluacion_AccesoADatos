@@ -40,25 +40,27 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblPeso" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtPeso" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="txtLugarNacimiento" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                   <Component id="lblLugarNacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNombre" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="txtNombre" min="-2" pref="121" max="-2" attributes="0"/>
+                                  <Component id="txtLugarNacimiento" alignment="1" min="-2" pref="121" max="-2" attributes="0"/>
+                                  <Component id="txtPeso" alignment="1" min="-2" pref="121" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtFechaNacimiento" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="lblFechaNacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblGenero" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtGenero" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="txtAltura" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="lblAltura" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblFechaNacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblGenero" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblAltura" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtGenero" min="-2" pref="122" max="-2" attributes="0"/>
+                                      <Component id="txtFechaNacimiento" alignment="1" min="-2" pref="122" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtAltura" alignment="1" min="-2" pref="122" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="lblPersonaje" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -332,7 +334,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="chboxEpisode4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Episodio 1"/>
+        <Property name="text" type="java.lang.String" value="Episodio 4"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="chboxEpisode5">

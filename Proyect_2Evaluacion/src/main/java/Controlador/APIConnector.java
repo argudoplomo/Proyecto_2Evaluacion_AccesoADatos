@@ -48,9 +48,9 @@ public class APIConnector {
                 JSONObject personaje = JSONPersonajes.getJSONObject(i);
 
                 int id = (i+1);
-																if (id >= 17) {
-																				id++;
-																}
+                if (id >= 17) {
+                    id++;
+                }
                 String nombre = personaje.getString("name");
                 String genero = personaje.getString("gender");
                 String urlPlaneta = personaje.getString("homeworld");

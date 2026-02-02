@@ -53,8 +53,8 @@ public class HibernateConnector {
     public String[] sacarNombresDePersonajesDePelicula (int episode_id) {
         return perr.sacarTodosDeUnaPelicula(episode_id);
     }
-				
-				public Personaje buscarPersonajePorNombre (String nombre) {
-								return perr.buscarPorNombreHib(nombre);
-				}
+
+    public Personaje buscarPersonajePorNombre (String nombre) {
+        return perr.buscarPorNombreHib(nombre);
+    }
 }

@@ -44,7 +44,6 @@ public class PersonajeRepository {
             personajes.add(p);
         }
 
-
         return personajes;
     }
     
@@ -66,8 +65,8 @@ public class PersonajeRepository {
         return nombres;
     }
 				
-				public Personaje buscarPorNombreHib (String nomPersonaje) {
-								Personaje p = em.createQuery("select p from Personaje p where p.nombre = :name", Personaje.class).setParameter("name", nomPersonaje).getSingleResult();
-								return p;
-				}
+    public Personaje buscarPorNombreHib (String nomPersonaje) {
+        Personaje p = em.createQuery("select p from Personaje p where p.nombre = :name", Personaje.class).setParameter("name", nomPersonaje).getSingleResult();
+        return p;
+    }
 }

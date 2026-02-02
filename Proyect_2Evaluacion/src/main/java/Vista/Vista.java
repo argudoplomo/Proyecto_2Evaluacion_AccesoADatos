@@ -10,6 +10,7 @@ import Controlador.HibernateConnector;
 import Controlador.MongoConnector;
 import Modelo.Pelicula;
 import com.mongodb.client.MongoDatabase;
+import jakarta.persistence.NoResultException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -136,7 +137,7 @@ public class Vista extends javax.swing.JFrame {
 
         chboxEpisode3.setText("Episodio 3");
 
-        chboxEpisode4.setText("Episodio 1");
+        chboxEpisode4.setText("Episodio 4");
 
         chboxEpisode5.setText("Episodio 5");
 
@@ -214,21 +215,22 @@ public class Vista extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPeso)
-                                    .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtLugarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblLugarNacimiento)
                                     .addComponent(lblNombre)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(38, 38, 38)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtLugarNacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPeso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFechaNacimiento)
-                                    .addComponent(lblGenero)
-                                    .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAltura, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblAltura)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblFechaNacimiento)
+                                        .addComponent(lblGenero)
+                                        .addComponent(lblAltura)
+                                        .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtAltura, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(lblPersonaje))
-                        .addGap(75, 75, 75)
+                        .addGap(66, 66, 66)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,17 +385,17 @@ public class Vista extends javax.swing.JFrame {
     private void btnMongoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMongoActionPerformed
         deAPIaMongo(txtNameBDMongo.getText());
         btnMongo.setEnabled(false);
-								//iniciarCheckBoxPeliculas();
+        //iniciarCheckBoxPeliculas();
     }//GEN-LAST:event_btnMongoActionPerformed
 
     private void btnHeidiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHeidiActionPerformed
         deMongoaHeidi(txtNameBDMongo.getText());
-								iniciarCheckBoxPeliculas();
+        iniciarCheckBoxPeliculas();
     }//GEN-LAST:event_btnHeidiActionPerformed
 
     private void btnSecuelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecuelasActionPerformed
         hibernate.insertarSecuelas();
-								iniciarCheckBoxPeliculas();
+        iniciarCheckBoxPeliculas();
     }//GEN-LAST:event_btnSecuelasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -403,7 +405,26 @@ public class Vista extends javax.swing.JFrame {
         String lugar = txtLugarNacimiento.getText();
         double peso = Double.parseDouble(txtPeso.getText());
         int altura = Integer.parseInt(txtAltura.getText());
-        
+								
+        Personaje personaje;
+
+        try {
+            personaje = hibernate.buscarPersonajePorNombre(nombre);
+        } catch (NoResultException ex) {
+            personaje = null;
+        }
+								
+        if (personaje == null) {
+            personaje = new Personaje();
+        }
+
+        personaje.setNombre(nombre);
+        personaje.setGenero(genero);
+        personaje.setAnioNacimiento(genero);
+        personaje.setLugarNacimiento(lugar);
+        personaje.setAltura(altura);
+        personaje.setPeso(peso);
+								
         ArrayList<Pelicula> pelis = new ArrayList<>();
         if (chboxEpisode1.isSelected())
             pelis.add(hibernate.buscarPeliPorIDHib(1));
@@ -423,10 +444,12 @@ public class Vista extends javax.swing.JFrame {
             pelis.add(hibernate.buscarPeliPorIDHib(8));
         if (chboxEpisode9.isSelected())
             pelis.add(hibernate.buscarPeliPorIDHib(9));
-        
-        Personaje personaje = new Personaje(nombre, genero, lugar, fecha, altura, peso, pelis);
-        
+								
+        personaje.setApariciones(pelis);
+								
         hibernate.insertarPersonaje(personaje);
+								
+        limpiar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbxPeliculasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxPeliculasItemStateChanged
@@ -444,15 +467,21 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxPeliculasItemStateChanged
 
     private void lstPersonajesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPersonajesValueChanged
-        String nombre = lstPersonajes.getSelectedValue();
-								Personaje p = hibernate.buscarPersonajePorNombre(nombre);
+        limpiar();
 								
-								txtNombre.setText(p.getNombre());
-								txtGenero.setText(p.getGenero());
-								txtLugarNacimiento.setText(p.getLugarNacimiento());
-								txtFechaNacimiento.setText(p.getAnioNacimiento());
-								txtAltura.setText(String.valueOf(p.getAltura()));
-								txtPeso.setText(String.valueOf(p.getPeso()));
+        String nombre = lstPersonajes.getSelectedValue();
+        Personaje p = hibernate.buscarPersonajePorNombre(nombre);
+
+        txtNombre.setText(p.getNombre());
+        txtGenero.setText(p.getGenero());
+        txtLugarNacimiento.setText(p.getLugarNacimiento());
+        txtFechaNacimiento.setText(p.getAnioNacimiento());
+        txtAltura.setText(String.valueOf(p.getAltura()));
+        txtPeso.setText(String.valueOf(p.getPeso()));
+
+        for (int i = 0; i < p.getApariciones().size(); i++) {
+            marcarEpisodeoDePersonaje(p.getApariciones().get(i).getEpisode_id());
+        }
     }//GEN-LAST:event_lstPersonajesValueChanged
 
     /**
@@ -556,5 +585,56 @@ public class Vista extends javax.swing.JFrame {
         sql.insertarRelacionATravesDePeliculas(pels2);
         
         btnSecuelas.setEnabled(true);
+    }
+				
+    private void limpiar() {
+            txtNombre.setText("");
+            txtGenero.setText("");
+            txtLugarNacimiento.setText("");
+            txtFechaNacimiento.setText("");
+            txtAltura.setText("");
+            txtPeso.setText("");
+
+            chboxEpisode1.setSelected(false);
+            chboxEpisode2.setSelected(false);
+            chboxEpisode3.setSelected(false);
+            chboxEpisode4.setSelected(false);
+            chboxEpisode5.setSelected(false);
+            chboxEpisode6.setSelected(false);
+            chboxEpisode7.setSelected(false);
+            chboxEpisode8.setSelected(false);
+            chboxEpisode9.setSelected(false);
+    }
+
+    private void marcarEpisodeoDePersonaje(int episodio) {
+        switch (episodio) {
+            case 1:
+                chboxEpisode1.setSelected(true);
+                break;
+            case 2:
+                chboxEpisode2.setSelected(true);
+                break;
+            case 3:
+                chboxEpisode3.setSelected(true);
+                break;
+            case 4:
+                chboxEpisode4.setSelected(true);
+                break;
+            case 5:
+                chboxEpisode5.setSelected(true);
+                break;
+            case 6:
+                chboxEpisode6.setSelected(true);
+                break;
+            case 7:
+                chboxEpisode7.setSelected(true);
+                break;
+            case 8:
+                chboxEpisode8.setSelected(true);
+                break;
+            case 9:
+                chboxEpisode9.setSelected(true);
+                break;     
+        }
     }
 }
