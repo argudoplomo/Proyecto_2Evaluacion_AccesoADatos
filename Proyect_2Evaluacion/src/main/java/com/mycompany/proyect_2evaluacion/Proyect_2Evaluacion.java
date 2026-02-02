@@ -24,7 +24,7 @@ public class Proyect_2Evaluacion {
     public static void main(String[] args) {
         
         
-            //APIConnector api = new APIConnector();
+            APIConnector api = new APIConnector();
             MongoConnector mongo = new MongoConnector("mongodb://localhost:27017/");
             DBConnector sql = new DBConnector("BD_SW");
             HibernateConnector hibernate = new HibernateConnector();

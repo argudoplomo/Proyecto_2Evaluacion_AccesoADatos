@@ -24,7 +24,7 @@ import modelo.Personaje;
 public class DBConnector {
     private String strConection = "jdbc:mysql://localhost/";
     private String user = "root";
-    private String password = "argudo";
+    private String password = "";
 
     Connection con;
 

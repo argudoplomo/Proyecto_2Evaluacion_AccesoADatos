@@ -27,7 +27,6 @@ import modelo.Personaje;
 public class Pelicula {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "episode_id")
     private int episode_id;
     

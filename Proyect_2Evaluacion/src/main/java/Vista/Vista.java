@@ -11,7 +11,6 @@ import Controlador.MongoConnector;
 import Modelo.Pelicula;
 import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import modelo.Personaje;
@@ -379,14 +378,17 @@ public class Vista extends javax.swing.JFrame {
     private void btnMongoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMongoActionPerformed
         deAPIaMongo(txtNameBDMongo.getText());
         btnMongo.setEnabled(false);
+								//iniciarCheckBoxPeliculas();
     }//GEN-LAST:event_btnMongoActionPerformed
 
     private void btnHeidiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHeidiActionPerformed
         deMongoaHeidi(txtNameBDMongo.getText());
+								iniciarCheckBoxPeliculas();
     }//GEN-LAST:event_btnHeidiActionPerformed
 
     private void btnSecuelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecuelasActionPerformed
         hibernate.insertarSecuelas();
+								iniciarCheckBoxPeliculas();
     }//GEN-LAST:event_btnSecuelasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
