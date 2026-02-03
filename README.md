@@ -3,9 +3,11 @@ Proyecto StarWars DB (API + Hibernate + MongoDB)
 Este proyecto permite trabajar con información del universo Star Wars obtenida desde una API externa y almacenarla en diferentes 
 sistemas de persistencia (base de datos relacional mediante Hibernate/JPA y base de datos NoSQL mediante MongoDB).
 
+
 ⚠️ IMPORTANTE (ANTES DE EJECUTAR)
 
 Antes de ejecutar el proyecto es obligatorio configurar correctamente las credenciales de la base de datos:
+
 
 1️⃣ Modificar properties.xml
 
@@ -15,6 +17,7 @@ Ruta:
 src\main\resources\META-INF/properties.xml
 
 Asegúrate de introducir tu usuario y contraseña reales.
+
 
 2️⃣ Modificar la clase DBConnector
 
