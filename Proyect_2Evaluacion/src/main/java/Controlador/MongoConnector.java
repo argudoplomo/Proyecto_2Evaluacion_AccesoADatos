@@ -30,11 +30,15 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
 /**
- *
- * @author Diurno
+ * Clase que actúa como conector entre la aplicación y MongoDB.
+ * 
+ * Usa un patrón Singleton para mantener una única instancia de MongoClient.
+ * Además, utiliza PojoCodecProvider para poder guardar y recuperar objetos
+ * Java (POJOs) directamente en MongoDB sin tener que convertirlos manualmente.
  */
 public class MongoConnector {
-				
+	
+    // Instancia única del cliente MongoDB 
     private static MongoClient instance = null;
 				
     private PersonajeRepository pr;
@@ -44,7 +48,13 @@ public class MongoConnector {
     PojoCodecProvider pojo = PojoCodecProvider.builder().automatic(true).build();  
     //CodecRegistry
     CodecRegistry codec = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(pojo));
-				
+
+    /**
+     * Constructor:
+     * Crea la conexión con MongoDB.
+     * 
+     * @param dbUri URI de conexión a MongoDB (ej: mongodb://localhost:27017)
+     */
     public MongoConnector(String dbUri) {
         if (instance == null) {
             instance = MongoClients.create(dbUri);
@@ -53,10 +63,19 @@ public class MongoConnector {
         }
     }
 
+    /**
+     * Devuelve la instancia única del cliente MongoDB.
+     * 
+     * @return MongoClient (instancia Singleton)
+     */
     public MongoClient getInstance() {
         return instance;
     }
 
+    /**
+     * Lista todas las bases de datos disponibles en el servidor MongoDB.
+     * Imprime sus nombres por consola.
+     */
     public void listDatabases() {
         try {
             List<Document> databases = instance.listDatabases().into(new ArrayList<>());
@@ -66,37 +85,85 @@ public class MongoConnector {
         }
     }
 
+    /**
+     * Crea o accede a una base de datos en MongoDB y le aplica el codecRegistry.
+     * 
+     * @param dbName nombre de la base de datos
+     * @return MongoDatabase con el codecRegistry aplicado
+     */
     public MongoDatabase createDB(String dbName) {
         return instance.getDatabase(dbName).withCodecRegistry(codec);
     }
 
+    /**
+     * Crea la colección de personajes en la base de datos.
+     * Delegando la creación al repositorio PersonajeRepository.
+     * 
+     * @param db base de datos donde se creará la colección
+     */
     public void createCollectionPersonajes(MongoDatabase db) {
         pr.crearColeccion(db);
     }
-				
+	
+     /**
+     * Crea la colección de películas en la base de datos.
+     * Delegando la creación al repositorio PeliculaRepository.
+     * 
+     * @param db base de datos donde se creará la colección
+     */
     public void createCollectionPeliculas(MongoDatabase db) {
         pelr.crearColeccion(db);
     }
 
+    /**
+     * Muestra por consola el nombre de todas las colecciones existentes en una BD.
+     * 
+     * @param db base de datos de la cual se quieren listar las colecciones
+     */
     public void printCollectionNames(MongoDatabase db) {
         List<String> collections = db.listCollectionNames().into(new ArrayList<>());
         collections.forEach(name -> System.out.println(name));
     }
-				
+	
+     /**
+     * Inserta una lista de personajes en MongoDB.
+     * Delegando el insert al repositorio de personajes.
+     * 
+     * @param db base de datos donde se insertarán los personajes
+     * @param personajes lista de personajes a insertar
+     */
     public void insertarPersonajes (MongoDatabase db, ArrayList<Personaje> personajes) {
         pr.insertarMuchosMongo(db, personajes);
     }
     
+     /**
+     * Inserta una lista de películas en MongoDB.
+     * Delegando el insert al repositorio de películas.
+     * 
+     * @param db base de datos donde se insertarán las películas
+     * @param peliculas lista de películas a insertar
+     */
     public void insertarPeliculas (MongoDatabase db, ArrayList<Pelicula> peliculas) {
         pelr.insertarMuchosMongo(db, peliculas);
     }
 				
-    public ArrayList<Personaje> cogerPersonajes (MongoDatabase db) {
-	return pr.cogerPersonajesMongo(db);
+    /**
+     * Recupera todos los personajes almacenados en MongoDB.
+     * 
+     * @param db base de datos desde donde se obtendrán los personajes
+     * @return ArrayList con todos los personajes
+     */
+    public ArrayList<Personaje> cogerPersonajes(MongoDatabase db) {
+        return pr.cogerPersonajesMongo(db);
     }
-				
-    public ArrayList<Pelicula> cogerPeliculas (MongoDatabase db) {
-	return pelr.cogerPeliculasMongo(db);
+
+    /**
+     * Recupera todas las películas almacenadas en MongoDB.
+     * 
+     * @param db base de datos desde donde se obtendrán las películas
+     * @return ArrayList con todas las películas
+     */
+    public ArrayList<Pelicula> cogerPeliculas(MongoDatabase db) {
+        return pelr.cogerPeliculasMongo(db);
     }
-				
 }

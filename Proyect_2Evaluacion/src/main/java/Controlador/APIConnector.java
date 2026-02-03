@@ -19,15 +19,26 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- *
- * @author Diurno
+ * Clase encargada de conectarse a la API pública de Star Wars (SWAPI)
+ * para obtener información de personajes y películas.
+ * 
+ * Descarga datos en formato JSON y los transforma en objetos Java
+ * (Personaje y Pelicula).
  */
 public class APIConnector {
-				
+    // URL base para acceder a los personajes en la API
     private String urlBasicaPersonajes = "https://swapi.info/api/people/";
+    // URL base para acceder a las películas en la API
     private String urlBasicaPeliculas = "https://swapi.info/api/films/";
+    
+    // Scanner utilizado para leer el contenido que devuelve la API
     private Scanner sc;
-
+    
+    /**
+     * Carga todos los personajes desde la API.
+     * 
+     * @return ArrayList con todos los personajes obtenidos de la API
+     */
     public ArrayList<Personaje> cargarPersonajes () {
         ArrayList<Personaje> personajes = new ArrayList<>();
 
@@ -86,6 +97,11 @@ public class APIConnector {
         return personajes;
     }
 
+     /**
+     * Carga todas las películas desde la API.
+     * 
+     * @return ArrayList con todas las películas obtenidas de la API
+     */
     public ArrayList<Pelicula> cargarPeliculas () {
         ArrayList<Pelicula> peliculas = new ArrayList<>();
 
@@ -136,7 +152,13 @@ public class APIConnector {
         sc.close();
         return peliculas;
     }
-
+    
+    /**
+     * Dada una URL de un planeta, consulta la API y devuelve el nombre del planeta.
+     * 
+     * @param urlStr URL del planeta en formato String
+     * @return nombre del planeta
+     */
     private String cargarLugarNacimiento (String urlStr) {
 
         String planeta = "";
@@ -165,6 +187,12 @@ public class APIConnector {
 
     }
  
+    /**
+     * Convierte una fecha en formato String "yyyy-MM-dd" a LocalDate.
+     * 
+     * @param strFecha fecha en String
+     * @return LocalDate con la fecha convertida
+     */
     private LocalDate transformarFecha (String strFecha) {
         String[] arrayFecha = strFecha.split("-");
 
@@ -175,6 +203,13 @@ public class APIConnector {
         return LocalDate.of(year, mes, dia);
     }
     
+    /**
+     * Convierte el peso recibido de la API en double.
+     * Si el peso es "unknown", devuelve -1.
+     * 
+     * @param strPeso peso en String
+     * @return peso en double o -1 si es desconocido
+     */
     private double transformarPeso (String strPeso) {
         strPeso = strPeso.replace(',', '.');
         if (strPeso.equals("unknown")) {
@@ -183,6 +218,13 @@ public class APIConnector {
         return Double.parseDouble(strPeso);
     }
     
+    /**
+     * Convierte la altura recibida de la API en int.
+     * Si la altura es "unknown", devuelve -1.
+     * 
+     * @param strAltura altura en String
+     * @return altura en int o -1 si es desconocida
+     */
     private int transformarAltura (String strAltura) {
         if (strAltura.equals("unknown")) {
             return -1;

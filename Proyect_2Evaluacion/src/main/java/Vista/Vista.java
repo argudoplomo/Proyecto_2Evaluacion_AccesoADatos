@@ -232,6 +232,7 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(lblPersonaje))
                         .addGap(66, 66, 66)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(chboxEpisode3)
@@ -248,7 +249,7 @@ public class Vista extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(17, 17, 17)
                                         .addComponent(lblOriginales)))
-                                .addGap(21, 21, 21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(chboxEpisode9)
                                     .addComponent(chboxEpisode8)
@@ -256,10 +257,9 @@ public class Vista extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(16, 16, 16)
                                         .addComponent(lblSecuelas))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -420,7 +420,7 @@ public class Vista extends javax.swing.JFrame {
 
         personaje.setNombre(nombre);
         personaje.setGenero(genero);
-        personaje.setAnioNacimiento(genero);
+        personaje.setAnioNacimiento(fecha);
         personaje.setLugarNacimiento(lugar);
         personaje.setAltura(altura);
         personaje.setPeso(peso);
@@ -453,7 +453,9 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbxPeliculasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxPeliculasItemStateChanged
-        lstPersonajes.removeAll();
+        
+								//lstPersonajes.clearSelection();
+								lstPersonajes.removeAll();
         
         DefaultListModel<String> modelo = new DefaultListModel<String>();
         int episode = cbxPeliculas.getSelectedIndex()+1;
@@ -467,9 +469,10 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxPeliculasItemStateChanged
 
     private void lstPersonajesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPersonajesValueChanged
-        limpiar();
-								
+        
         String nombre = lstPersonajes.getSelectedValue();
+								limpiar();
+																
         Personaje p = hibernate.buscarPersonajePorNombre(nombre);
 
         txtNombre.setText(p.getNombre());
@@ -604,6 +607,8 @@ public class Vista extends javax.swing.JFrame {
             chboxEpisode7.setSelected(false);
             chboxEpisode8.setSelected(false);
             chboxEpisode9.setSelected(false);
+												
+												//lstPersonajes.clearSelection();
     }
 
     private void marcarEpisodeoDePersonaje(int episodio) {

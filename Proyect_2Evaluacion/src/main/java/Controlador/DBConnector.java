@@ -18,16 +18,31 @@ import java.util.logging.Logger;
 import modelo.Personaje;
 
 /**
- *
- * @author Diurno
+ * Clase encargada de gestionar la conexión con MySQL mediante JDBC.
+ * 
+ * Se encarga de:
+ * - Conectar con el servidor
+ * - Crear la base de datos si no existe
+ * - Crear las tablas necesarias
+ * - Insertar personajes, películas y sus relaciones (tabla intermedia)
  */
 public class DBConnector {
+    
+    // URL de conexión al servidor MySQL 
     private String strConection = "jdbc:mysql://localhost/";
+    
+    // Usuario y contraseña del servidor
     private String user = "root";
-    private String password = "argudo";
+    private String password = "";
 
+    // Objeto Connection para ejecutar sentencias SQL
     Connection con;
 
+    /**
+     * Constructor: abre conexión y crea la base de datos si no existe.
+     * 
+     * @param nameDB nombre de la base de datos a crear/usar
+     */
     public DBConnector(String nameDB) {
         try {
             this.con = DriverManager.getConnection(strConection, user, password);
@@ -37,6 +52,11 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Inserta una lista de personajes en la tabla personaje.
+     * 
+     * @param personajes lista de personajes a insertar
+     */
     public void insertarPersonajes (ArrayList <Personaje> personajes) {
         String insert = "INSERT INTO personaje (id, nombre, genero, lugar_nacimiento, anio_nacimiento, altura, peso) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -62,6 +82,11 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Inserta una lista de películas en la tabla pelicula.
+     * 
+     * @param peliculas lista de películas a insertar
+     */
     public void insertarPeliculas (ArrayList <Pelicula> peliculas) {
         String insert = "INSERT INTO pelicula(episode_id, titulo, director, productor, fecha_lanzamiento) "
         + "VALUES (?, ?, ?, ?, ?);";
@@ -84,7 +109,14 @@ public class DBConnector {
             Logger.getLogger(DBConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-				
+    
+    /**
+     * Inserta las relaciones entre películas y personajes en la tabla intermedia pelicula_personaje.
+     * 
+     * Esta tabla representa una relación muchos-a-muchos.
+     * 
+     * @param peliculas lista de películas con sus personajes asociados
+     */
     public void insertarRelacionATravesDePeliculas (ArrayList<Pelicula> peliculas) {
         String insert = "INSERT INTO pelicula_personaje(personaje_id, pelicula_id) "
 																												+ "VALUES (?, ?);";
@@ -107,9 +139,13 @@ public class DBConnector {
         } catch (SQLException ex) {
             Logger.getLogger(DBConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
-				}
+    }
 				
-
+    /**
+     * Crea la base de datos si no existe y sus tablas.
+     * 
+     * @param nameDB nombre de la base de datos
+     */
     private void createBaseDatos (String nameDB) {
         try {
             String creacion = "CREATE DATABASE IF NOT EXISTS " + nameDB + ";";
@@ -128,6 +164,12 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Crea las tablas necesarias:
+     * - personaje
+     * - pelicula
+     * - pelicula_personaje (tabla intermedia)
+     */
     private void crearTablas () {
         String tablaPersonaje = "CREATE TABLE IF NOT EXISTS personaje (\n" +
             "id INT AUTO_INCREMENT PRIMARY KEY,\n" +

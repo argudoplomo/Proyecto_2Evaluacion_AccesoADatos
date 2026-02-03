@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -22,36 +15,75 @@ import modelo.Personaje;
  *
  * @author Diurno
  */
+
+/*
+ * @Entity indica que esta clase es una entidad 
+ * y se mapeará a una tabla en la base de datos
+ */
 @Entity
+
+/*
+ * @Table define el nombre de la tabla en la BD
+ */
 @Table(name = "pelicula")
 public class Pelicula {
-    
+
+    /*
+     * @Id indica que este atributo es la clave primaria
+     * de la entidad
+     */
     @Id
     @Column(name = "episode_id")
     private int episode_id;
-    
-    @Column (name = "titulo")
+
+    /*
+     * Título de la película
+     */
+    @Column(name = "titulo")
     private String titulo;
-    
-    @Column (name = "director")
+
+    /*
+     * Director de la película
+     */
+    @Column(name = "director")
     private String director;
-    
-    @Column (name = "productor")
+
+    /*
+     * Productor de la película
+     */
+    @Column(name = "productor")
     private String productor;
-    
+
+    /*
+     * Fecha de lanzamiento de la película
+     * Se almacena como LocalDate
+     */
     @Timestamp
     @Column(name = "fecha_lanzamiento")
     private LocalDate fecha_lanzamiento;
-    
+
+    /*
+     * Relación ManyToMany con la entidad Personaje
+     * mappedBy indica que la relación se gestiona desde la clase Personaje, en el atributo "apariciones"
+     */
     @ManyToMany(mappedBy = "apariciones")
     private List<Personaje> personajes;
 
-    public Pelicula () {}
+    /*
+     * Constructor vacío
+     */
+    public Pelicula() {}
 
-    public Pelicula (int id) {
+    /*
+     * Constructor que recibe solo el id
+     */
+    public Pelicula(int id) {
         this.episode_id = id;
     }
-				
+
+    /*
+     * Constructor completo con lista de personajes
+     */
     public Pelicula(int episode_id, String titulo, String director, String productor, LocalDate fecha_lanzamiento, ArrayList<Personaje> personajes) {
         this.episode_id = episode_id;
         this.titulo = titulo;
@@ -61,6 +93,9 @@ public class Pelicula {
         this.personajes = personajes;
     }
 
+    /*
+     * Constructor sin personajes
+     */
     public Pelicula(int episode_id, String titulo, String director, String productor, LocalDate fecha_lanzamiento) {
         this.episode_id = episode_id;
         this.titulo = titulo;
@@ -68,6 +103,8 @@ public class Pelicula {
         this.productor = productor;
         this.fecha_lanzamiento = fecha_lanzamiento;
     }
+
+    // Getters y Setters
 
     public int getEpisode_id() {
         return episode_id;
@@ -117,9 +154,12 @@ public class Pelicula {
         this.personajes = personajes;
     }
 
+    /*
+     * Método toString para mostrar la información
+     * de la película en formato texto
+     */
     @Override
     public String toString() {
         return "Pelicula{" + "episode_id=" + episode_id + ", titulo=" + titulo + ", director=" + director + ", productor=" + productor + ", fecha_lanzamiento=" + fecha_lanzamiento + '}';
     }
-    
 }

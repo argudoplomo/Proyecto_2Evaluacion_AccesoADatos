@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Clase Personaje
+ * Representa la entidad "personaje" en la base de datos
+ * usando JPA (Jakarta Persistence)
  */
 package modelo;
 
@@ -9,7 +10,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -22,49 +22,106 @@ import java.util.List;
  *
  * @author Diurno
  */
+
+/*
+ * @Entity indica que esta clase es una entidad JPA
+ * y se mapeará a una tabla de la base de datos
+ */
 @Entity
+
+/*
+ * @Table define el nombre de la tabla en la BD
+ */
 @Table(name = "personaje")
 public class Personaje {
-	
+
+    /*
+     * Clave primaria del personaje
+     * Se genera automáticamente con autoincrement (IDENTITY)
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    
+
+    /*
+     * Nombre del personaje
+     */
     @Column(name = "nombre")
     private String nombre;
-    
+
+    /*
+     * Género del personaje
+     */
     @Column(name = "genero")
     private String genero;
-    
+
+    /*
+     * Lugar de nacimiento del personaje
+     */
     @Column(name = "lugar_nacimiento")
     private String lugarNacimiento;
-    
+
+    /*
+     * Año de nacimiento del personaje
+     */
     @Column(name = "anio_nacimiento")
     private String anioNacimiento;
-    
+
+    /*
+     * Altura del personaje (en cm)
+     */
     @Column(name = "altura")
     private int altura;
-    
+
+    /*
+     * Peso del personaje
+     */
     @Column(name = "peso")
     private double peso;
-			
+
+    /*
+     * Relación ManyToMany con Pelicula
+     *
+     * @JoinTable define la tabla intermedia "pelicula_personaje"
+     * joinColumns -> columna que referencia a Personaje
+     * inverseJoinColumns -> columna que referencia a Pelicula
+     *
+     * Esta es la entidad propietaria de la relación
+     */
     @ManyToMany
     @JoinTable(
         name = "pelicula_personaje",
-        joinColumns = @JoinColumn(name = "personaje_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "episode_id")
+        joinColumns = @JoinColumn(
+            name = "personaje_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "pelicula_id",
+            referencedColumnName = "episode_id"
+        )
     )
     private List<Pelicula> apariciones;
 
+    /*
+     * Constructor vacío obligatorio para JPA
+     */
+    public Personaje() {}
 
-    public Personaje () {}
-				
-    public Personaje (int id) {
+    /*
+     * Constructor con solo el id
+     */
+    public Personaje(int id) {
         this.id = id;
     }
 
-    public Personaje(int id, String nombre, String genero, String lugarNacimiento, String anioNacimiento, int altura, double peso, ArrayList<Pelicula> apariciones) {
+    /*
+     * Constructor completo con lista de películas
+     */
+    public Personaje(int id, String nombre, String genero,
+                     String lugarNacimiento, String anioNacimiento,
+                     int altura, double peso,
+                     ArrayList<Pelicula> apariciones) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
@@ -75,7 +132,12 @@ public class Personaje {
         this.apariciones = apariciones;
     }
 
-    public Personaje(int id, String nombre, String genero, String lugarNacimiento, String anioNacimiento, int altura, double peso) {
+    /*
+     * Constructor sin películas
+     */
+    public Personaje(int id, String nombre, String genero,
+                     String lugarNacimiento, String anioNacimiento,
+                     int altura, double peso) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
@@ -85,7 +147,13 @@ public class Personaje {
         this.peso = peso;
     }
 
-    public Personaje(String nombre, String genero, String lugarNacimiento, String anioNacimiento, int altura, double peso, List<Pelicula> apariciones) {
+    /*
+     * Constructor sin id (útil para insertar nuevos registros)
+     */
+    public Personaje(String nombre, String genero,
+                     String lugarNacimiento, String anioNacimiento,
+                     int altura, double peso,
+                     List<Pelicula> apariciones) {
         this.nombre = nombre;
         this.genero = genero;
         this.lugarNacimiento = lugarNacimiento;
@@ -94,6 +162,8 @@ public class Personaje {
         this.peso = peso;
         this.apariciones = apariciones;
     }
+
+    // Getters y Setters
 
     public int getId() {
         return id;
@@ -159,9 +229,19 @@ public class Personaje {
         this.apariciones = apariciones;
     }
 
+    /*
+     * Método toString para mostrar los datos del personaje
+     */
     @Override
     public String toString() {
-        return "Personaje{" + "id=" + id + ", nombre=" + nombre + ", genero=" + genero + ", lugarNacimiento=" + lugarNacimiento + ", anioNacimiento=" + anioNacimiento + ", altura=" + altura + ", peso=" + peso + '}';
+        return "Personaje{" +
+                "id=" + id +
+                ", nombre=" + nombre +
+                ", genero=" + genero +
+                ", lugarNacimiento=" + lugarNacimiento +
+                ", anioNacimiento=" + anioNacimiento +
+                ", altura=" + altura +
+                ", peso=" + peso +
+                '}';
     }
-
 }
